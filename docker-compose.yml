@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  mon-site-web:
+    build: .
+    ports:
+      - "8080:80"
