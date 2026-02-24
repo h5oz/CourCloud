@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc, onSnapshot, increment } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-// TA CONFIGURATION FIREBASE (Ne touche à rien, ce sont tes clés)
 const firebaseConfig = {
   apiKey: "AIzaSyA2Rr-7n5D0qhDPHGiM3ojE21n-ttTjnQE",
   authDomain: "projet-campos.firebaseapp.com",
@@ -15,43 +14,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// On cible la collection "registre_loutres"
-const registreCollection = collection(db, "registre_loutres");
-
-const form = document.getElementById('conservation-form');
-const signaturesList = document.getElementById('signatures-list');
-
-// ENVOYER une signature
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const nom = document.getElementById('nom').value;
-    const texte = document.getElementById('message').value;
+window.incrementerViews = async (loutreId) => {
+    const loutreRef = doc(db, "statistiques_loutres", loutreId);
+    const countDisplay = document.getElementById('view-count');
 
     try {
-        await addDoc(registreCollection, {
-            nom: nom,
-            message: texte,
-            date: serverTimestamp()
-        });
-        form.reset();
-    } catch (erreur) {
-        console.error("Erreur d'ajout :", erreur);
-    }
-});
+        await setDoc(loutreRef, { vues: increment(1) }, { merge: true });
+    } catch (e) { console.error(e); }
 
-// LIRE les signatures en temps réel
-const q = query(registreCollection, orderBy("date", "desc"));
-
-onSnapshot(q, (snapshot) => {
-    signaturesList.innerHTML = ''; 
-    snapshot.forEach((doc) => {
-        const data = doc.data();
-        const signatureCard = `
-            <div class="bg-slate-800 p-6 rounded-lg border-l-4 border-amber-500 shadow-md">
-                <p class="font-bold text-amber-500 text-xl font-serif">${data.nom}</p>
-                <p class="text-slate-300 mt-2 font-light italic">"${data.message}"</p>
-            </div>
-        `;
-        signaturesList.innerHTML += signatureCard;
+    onSnapshot(loutreRef, (doc) => {
+        if (doc.exists()) countDisplay.innerText = doc.data().vues;
     });
-});
+};

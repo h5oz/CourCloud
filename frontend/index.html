@@ -8,71 +8,130 @@
     <style>
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         h1, h2 { font-family: 'Playfair Display', serif; }
+        .page { display: none; }
+        .page.active { display: block; }
     </style>
 </head>
 <body class="bg-slate-900 text-slate-200">
 
     <nav class="fixed top-0 w-full z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <span class="text-2xl font-bold tracking-tighter text-amber-500">LUTRINAE</span>
+            <span class="text-2xl font-bold tracking-tighter text-amber-500 cursor-pointer" onclick="showPage('accueil')">LUTRINAE</span>
             <div class="space-x-8 text-sm uppercase tracking-widest font-semibold">
-                <a href="#accueil" class="hover:text-amber-500 transition">Accueil</a>
-                <a href="#especes" class="hover:text-amber-500 transition">Espèces</a>
-                <a href="#menaces" class="hover:text-amber-500 transition">Conservation</a>
-                <a href="#registre" class="hover:text-amber-500 transition">Registre</a>
+                <a href="javascript:void(0)" onclick="showPage('accueil')" class="hover:text-amber-500 transition">Accueil</a>
+                <a href="javascript:void(0)" onclick="showPage('especes')" class="hover:text-amber-500 transition">Espèces</a>
             </div>
         </div>
     </nav>
 
-    <section id="accueil" class="relative h-screen flex items-center justify-center">
-        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-40">
-            <source src="https://v3.ftcdn.net/jpg/05/63/32/38/240_F_563323812_G898x4Eun0Q9n8L5P1A0X9M9lGvH8X9W_ST.mp4" type="video/mp4">
-        </video>
-        <div class="relative z-10 text-center">
-            <h1 class="text-7xl md:text-9xl font-bold mb-4">L'Âme des Eaux</h1>
-            <p class="text-xl tracking-widest uppercase text-amber-500">Étude approfondie des Lutrinés</p>
-        </div>
-    </section>
+    <main id="page-accueil" class="page active">
+        <section class="relative h-screen flex items-center justify-center">
+            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-40">
+                <source src="https://media.istockphoto.com/id/1177880392/fr/vid%C3%A9o/loutre-de-mer.mp4?s=mp4-640x640-is&k=20&c=bU-6qVP8zaWbN2o42q9zZ_GY9o66cEqDrkLAC2S5yRs=" type="video/mp4">
+            </video>
+            <div class="relative z-10 text-center">
+                <h1 class="text-7xl md:text-9xl font-bold mb-4">L'Âme des Eaux</h1>
+                <p class="text-xl tracking-widest uppercase text-amber-500">Étude approfondie des Lutrinés</p>
+                <button onclick="showPage('especes')" class="mt-8 px-8 py-3 border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-slate-900 transition font-bold uppercase tracking-widest">Explorer l'Encyclopédie</button>
+            </div>
+        </section>
+    </main>
 
-    <section id="especes" class="py-24 max-w-7xl mx-auto px-6">
-        <h2 class="text-5xl mb-16 border-l-4 border-amber-500 pl-6">Espèces Majeures</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-slate-800 rounded-2xl overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1598965646736-681966555891?q=80&w=800" class="h-64 w-full object-cover group-hover:scale-110 transition duration-500">
-                <div class="p-6">
-                    <h3 class="text-2xl font-bold mb-2">Loutre de Mer</h3>
-                    <p class="text-slate-400 text-sm italic">Enhydra lutris</p>
+    <main id="page-especes" class="page pt-32 pb-24">
+        <section class="max-w-7xl mx-auto px-6">
+            <h2 class="text-5xl mb-16 border-l-4 border-amber-500 pl-6">Espèces Majeures</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div onclick="showDetails('mer')" class="bg-slate-800 rounded-2xl overflow-hidden group cursor-pointer border border-transparent hover:border-amber-500 transition shadow-2xl">
+                    <img src="https://t4.ftcdn.net/jpg/06/23/53/15/240_F_623531546_aumqG2seN8R8aZiGjGsiYiMfbfHGZeWq.jpg" class="h-64 w-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Loutre de Mer</h3>
+                        <p class="text-slate-400 text-sm italic mb-4">Enhydra lutris</p>
+                        <span class="text-amber-500 text-sm font-bold uppercase tracking-widest">Voir la fiche →</span>
+                    </div>
+                </div>
+                <div onclick="showDetails('europe')" class="bg-slate-800 rounded-2xl overflow-hidden group cursor-pointer border border-transparent hover:border-amber-500 transition shadow-2xl">
+                    <img src="https://t3.ftcdn.net/jpg/18/68/77/74/240_F_1868777419_MDL8kpKgQ4C8srgcJX0gPMQS7jze2kSg.jpg" class="h-64 w-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Loutre d'Europe</h3>
+                        <p class="text-slate-400 text-sm italic mb-4">Lutra lutra</p>
+                        <span class="text-amber-500 text-sm font-bold uppercase tracking-widest">Voir la fiche →</span>
+                    </div>
+                </div>
+                <div onclick="showDetails('geante')" class="bg-slate-800 rounded-2xl overflow-hidden group cursor-pointer border border-transparent hover:border-amber-500 transition shadow-2xl">
+                    <img src="https://t4.ftcdn.net/jpg/01/28/83/93/240_F_128839382_xChXtnBrGwLckXumNPPXpp0hD4Yd3Ncr.jpg" class="h-64 w-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Loutre Géante</h3>
+                        <p class="text-slate-400 text-sm italic mb-4">Pteronura brasiliensis</p>
+                        <span class="text-amber-500 text-sm font-bold uppercase tracking-widest">Voir la fiche →</span>
+                    </div>
                 </div>
             </div>
-            <div class="bg-slate-800 rounded-2xl overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1517042502690-3363e7978f8c?q=80&w=800" class="h-64 w-full object-cover group-hover:scale-110 transition duration-500">
-                <div class="p-6">
-                    <h3 class="text-2xl font-bold mb-2">Loutre d'Europe</h3>
-                    <p class="text-slate-400 text-sm italic">Lutra lutra</p>
-                </div>
-            </div>
-            <div class="bg-slate-800 rounded-2xl overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1549480017-d76466a4b7e8?q=80&w=800" class="h-64 w-full object-cover group-hover:scale-110 transition duration-500">
-                <div class="p-6">
-                    <h3 class="text-2xl font-bold mb-2">Loutre Géante</h3>
-                    <p class="text-slate-400 text-sm italic">Pteronura brasiliensis</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <section id="registre" class="py-24 bg-slate-950">
-        <div class="max-w-3xl mx-auto px-6">
-            <h2 class="text-4xl text-center mb-12 italic">Signer le Registre de Conservation</h2>
-            <form id="conservation-form" class="space-y-6 bg-slate-900 p-8 rounded-3xl border border-slate-800">
-                <input type="text" id="nom" placeholder="Votre Nom" required class="w-full p-4 bg-slate-800 rounded-xl border border-slate-700 focus:border-amber-500 outline-none">
-                <textarea id="message" placeholder="Votre engagement..." required class="w-full p-4 bg-slate-800 rounded-xl border border-slate-700 h-32 focus:border-amber-500 outline-none"></textarea>
-                <button type="submit" class="w-full py-4 bg-amber-600 hover:bg-amber-500 rounded-xl font-bold uppercase tracking-widest transition">Envoyer au Cloud</button>
-            </form>
-            <div id="signatures-list" class="mt-16 space-y-4"></div>
-        </div>
-    </section>
+    <main id="page-details" class="page pt-32 pb-24">
+        <section class="max-w-4xl mx-auto px-6">
+            <div class="flex justify-between items-center mb-8">
+                <button onclick="showPage('especes')" class="text-amber-500 font-bold uppercase tracking-widest hover:underline">← Retour</button>
+                <div class="bg-slate-800 px-4 py-2 rounded-full border border-slate-700 flex items-center gap-2">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+                    </span>
+                    <span id="view-count" class="font-mono font-bold text-amber-500">...</span>
+                    <span class="text-xs uppercase tracking-tighter text-slate-400">vues cloud</span>
+                </div>
+            </div>
+            <div id="details-content"></div>
+        </section>
+    </main>
 
     <script type="module" src="app.js"></script>
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        const data = {
+            mer: {
+                titre: "Loutre de Mer",
+                latin: "Enhydra lutris",
+                image: "https://t4.ftcdn.net/jpg/06/23/53/15/240_F_623531546_aumqG2seN8R8aZiGjGsiYiMfbfHGZeWq.jpg",
+                description: "La loutre de mer possède la fourrure la plus dense du règne animal. Elle est essentielle à l'équilibre des forêts de kelp.",
+                details: "Elle utilise des pierres comme outils pour ouvrir des coquillages. Elle passe la majeure partie de sa vie dans l'eau salée."
+            },
+            europe: {
+                titre: "Loutre d'Europe",
+                latin: "Lutra lutra",
+                image: "https://t3.ftcdn.net/jpg/18/68/77/74/240_F_1868777419_MDL8kpKgQ4C8srgcJX0gPMQS7jze2kSg.jpg",
+                description: "Espèce emblématique de nos rivières, elle est une nageuse hors pair grâce à son corps fuselé.",
+                details: "Elle est principalement nocturne et solitaire. Son retour en France est un signe positif de la qualité des milieux aquatiques."
+            },
+            geante: {
+                titre: "Loutre Géante",
+                latin: "Pteronura brasiliensis",
+                image: "https://t4.ftcdn.net/jpg/01/28/83/93/240_F_128839382_xChXtnBrGwLckXumNPPXpp0hD4Yd3Ncr.jpg",
+                description: "La plus grande de toutes, elle peut mesurer jusqu'à 1m80. On l'appelle le loup des rivières en Amazonie.",
+                details: "Contrairement aux autres, elle est très sociale et vit en groupes familiaux bruyants. Elle peut chasser des caïmans."
+            }
+        };
+
+        function showDetails(id) {
+            const info = data[id];
+            const content = `
+                <img src="${info.image}" class="w-full h-96 object-cover rounded-3xl mb-12 shadow-2xl">
+                <h2 class="text-6xl font-bold mb-2">${info.titre}</h2>
+                <p class="text-amber-500 italic text-2xl mb-8">${info.latin}</p>
+                <p class="text-xl leading-relaxed text-slate-300 mb-6">${info.description}</p>
+                <h3 class="text-2xl font-bold text-white mb-4 italic">Le saviez-vous ?</h3>
+                <p class="text-xl leading-relaxed text-slate-400">${info.details}</p>
+            `;
+            document.getElementById('details-content').innerHTML = content;
+            showPage('details');
+            if(window.incrementerViews) window.incrementerViews(id);
+        }
+    </script>
 </body>
 </html>
