@@ -1,8 +1,3 @@
-Gemini a dit
-Pas de panique, Hugo ! C'est l'élément le plus important pour que ton GitHub ait l'air "pro". Le README.md, c'est la vitrine de ton projet.
-
-Voici un contenu simple, efficace et structuré que tu peux copier-coller dans un fichier nommé README.md à la racine de ton projet.
-
 🦦 Lutrinae - Encyclopédie des Loutres
 Bienvenue sur Lutrinae, une encyclopédie scientifique interactive dédiée aux loutres. Ce projet a été réalisé dans le cadre d'un TP sur la conteneurisation et les services Cloud.
 
@@ -43,3 +38,4 @@ Firestore : Base de données NoSQL pour gérer les statistiques de vues en temps
 
 💡 Pourquoi Docker ?
 L'utilisation de Docker (image nginx:alpine) permet de garantir que le serveur web fonctionne de la même manière sur n'importe quel ordinateur, facilitant ainsi la collaboration et le déploiement.
+
