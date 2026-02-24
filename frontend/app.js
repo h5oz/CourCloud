@@ -1,8 +1,7 @@
-// 1. On importe les outils Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-// 2. TA CONFIGURATION FIREBASE EXACTE
+// TA CONFIGURATION FIREBASE (Ne touche à rien, ce sont tes clés)
 const firebaseConfig = {
   apiKey: "AIzaSyA2Rr-7n5D0qhDPHGiM3ojE21n-ttTjnQE",
   authDomain: "projet-campos.firebaseapp.com",
@@ -13,59 +12,46 @@ const firebaseConfig = {
   measurementId: "G-QYM4DNMY1C"
 };
 
-// 3. Initialisation de Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const votesCollection = collection(db, "live_battle_votes"); // Nouvelle table pour les votes
 
-// 4. Cibler les éléments HTML
-const btnMac = document.getElementById('btn-mac');
-const btnWin = document.getElementById('btn-win');
-const barMac = document.getElementById('bar-mac');
-const barWin = document.getElementById('bar-win');
-const totalText = document.getElementById('total-votes');
+// On cible la collection "registre_loutres"
+const registreCollection = collection(db, "registre_loutres");
 
-// 5. Fonction pour envoyer un vote dans le Cloud
-async function envoyerVote(choix) {
+const form = document.getElementById('conservation-form');
+const signaturesList = document.getElementById('signatures-list');
+
+// ENVOYER une signature
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const nom = document.getElementById('nom').value;
+    const texte = document.getElementById('message').value;
+
     try {
-        await addDoc(votesCollection, { camp: choix });
-        // Petit effet fun : on fait trembler le bouton cliqué (facultatif mais stylé)
+        await addDoc(registreCollection, {
+            nom: nom,
+            message: texte,
+            date: serverTimestamp()
+        });
+        form.reset();
     } catch (erreur) {
-        console.error("Erreur de vote :", erreur);
+        console.error("Erreur d'ajout :", erreur);
     }
-}
+});
 
-// Lier les clics aux boutons
-btnMac.addEventListener('click', () => envoyerVote('Mac'));
-btnWin.addEventListener('click', () => envoyerVote('Windows'));
+// LIRE les signatures en temps réel
+const q = query(registreCollection, orderBy("date", "desc"));
 
-// 6. Écouter la base de données EN TEMPS RÉEL (La magie opère ici)
-onSnapshot(votesCollection, (snapshot) => {
-    let compteurMac = 0;
-    let compteurWin = 0;
-
-    // On compte tous les votes
+onSnapshot(q, (snapshot) => {
+    signaturesList.innerHTML = ''; 
     snapshot.forEach((doc) => {
         const data = doc.data();
-        if (data.camp === 'Mac') compteurMac++;
-        if (data.camp === 'Windows') compteurWin++;
+        const signatureCard = `
+            <div class="bg-slate-800 p-6 rounded-lg border-l-4 border-amber-500 shadow-md">
+                <p class="font-bold text-amber-500 text-xl font-serif">${data.nom}</p>
+                <p class="text-slate-300 mt-2 font-light italic">"${data.message}"</p>
+            </div>
+        `;
+        signaturesList.innerHTML += signatureCard;
     });
-
-    const total = compteurMac + compteurWin;
-    totalText.innerText = `Total des votes : ${total}`;
-
-    // On calcule les pourcentages pour animer la barre
-    if (total === 0) {
-        barMac.style.width = '50%'; barMac.innerText = '50%';
-        barWin.style.width = '50%'; barWin.innerText = '50%';
-    } else {
-        const pourcentageMac = Math.round((compteurMac / total) * 100);
-        const pourcentageWin = 100 - pourcentageMac;
-
-        barMac.style.width = `${pourcentageMac}%`; 
-        barMac.innerText = pourcentageMac > 10 ? `${pourcentageMac}%` : ''; // Cache le texte si c'est trop petit
-        
-        barWin.style.width = `${pourcentageWin}%`; 
-        barWin.innerText = pourcentageWin > 10 ? `${pourcentageWin}%` : '';
-    }
 });

@@ -2,34 +2,76 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Battle - TP Cloud</title>
+    <title>Lutrinae | Encyclopédie Scientifique</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        h1, h2 { font-family: 'Playfair Display', serif; }
+    </style>
 </head>
-<body class="bg-gray-900 min-h-screen flex flex-col items-center justify-center py-10 font-sans text-white">
-    
-    <div class="bg-gray-800 p-8 rounded-3xl shadow-2xl w-full max-w-2xl text-center border border-gray-700">
-        <h1 class="text-4xl font-extrabold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-red-500">
-            ⚔️ La Grande Bataille
-        </h1>
-        <p class="text-gray-400 mb-10 text-lg">Le vote est en direct via Firebase. Choisis ton camp !</p>
+<body class="bg-slate-900 text-slate-200">
 
-        <div class="flex flex-col sm:flex-row justify-between gap-6 mb-10">
-            <button id="btn-mac" class="flex-1 bg-blue-600 hover:bg-blue-500 transition-all p-6 rounded-2xl font-bold text-2xl shadow-[0_0_20px_rgba(37,99,235,0.4)] transform hover:scale-105">
-                🍏 Mac
-            </button>
-            <button id="btn-win" class="flex-1 bg-red-600 hover:bg-red-500 transition-all p-6 rounded-2xl font-bold text-2xl shadow-[0_0_20px_rgba(220,38,38,0.4)] transform hover:scale-105">
-                🪟 Windows
-            </button>
+    <nav class="fixed top-0 w-full z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <span class="text-2xl font-bold tracking-tighter text-amber-500">LUTRINAE</span>
+            <div class="space-x-8 text-sm uppercase tracking-widest font-semibold">
+                <a href="#accueil" class="hover:text-amber-500 transition">Accueil</a>
+                <a href="#especes" class="hover:text-amber-500 transition">Espèces</a>
+                <a href="#menaces" class="hover:text-amber-500 transition">Conservation</a>
+                <a href="#registre" class="hover:text-amber-500 transition">Registre</a>
+            </div>
         </div>
+    </nav>
 
-        <div class="relative w-full h-14 bg-gray-700 rounded-full overflow-hidden flex shadow-inner">
-            <div id="bar-mac" class="h-full bg-gradient-to-r from-blue-700 to-blue-500 transition-all duration-700 flex items-center justify-start px-4 font-bold text-xl" style="width: 50%;">50%</div>
-            <div id="bar-win" class="h-full bg-gradient-to-l from-red-700 to-red-500 transition-all duration-700 flex items-center justify-end px-4 font-bold text-xl" style="width: 50%;">50%</div>
+    <section id="accueil" class="relative h-screen flex items-center justify-center">
+        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-40">
+            <source src="https://v3.ftcdn.net/jpg/05/63/32/38/240_F_563323812_G898x4Eun0Q9n8L5P1A0X9M9lGvH8X9W_ST.mp4" type="video/mp4">
+        </video>
+        <div class="relative z-10 text-center">
+            <h1 class="text-7xl md:text-9xl font-bold mb-4">L'Âme des Eaux</h1>
+            <p class="text-xl tracking-widest uppercase text-amber-500">Étude approfondie des Lutrinés</p>
         </div>
+    </section>
 
-        <p id="total-votes" class="mt-8 text-gray-400 font-mono text-xl animate-pulse">Total des votes : 0</p>
-    </div>
+    <section id="especes" class="py-24 max-w-7xl mx-auto px-6">
+        <h2 class="text-5xl mb-16 border-l-4 border-amber-500 pl-6">Espèces Majeures</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-slate-800 rounded-2xl overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1598965646736-681966555891?q=80&w=800" class="h-64 w-full object-cover group-hover:scale-110 transition duration-500">
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold mb-2">Loutre de Mer</h3>
+                    <p class="text-slate-400 text-sm italic">Enhydra lutris</p>
+                </div>
+            </div>
+            <div class="bg-slate-800 rounded-2xl overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1517042502690-3363e7978f8c?q=80&w=800" class="h-64 w-full object-cover group-hover:scale-110 transition duration-500">
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold mb-2">Loutre d'Europe</h3>
+                    <p class="text-slate-400 text-sm italic">Lutra lutra</p>
+                </div>
+            </div>
+            <div class="bg-slate-800 rounded-2xl overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1549480017-d76466a4b7e8?q=80&w=800" class="h-64 w-full object-cover group-hover:scale-110 transition duration-500">
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold mb-2">Loutre Géante</h3>
+                    <p class="text-slate-400 text-sm italic">Pteronura brasiliensis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="registre" class="py-24 bg-slate-950">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="text-4xl text-center mb-12 italic">Signer le Registre de Conservation</h2>
+            <form id="conservation-form" class="space-y-6 bg-slate-900 p-8 rounded-3xl border border-slate-800">
+                <input type="text" id="nom" placeholder="Votre Nom" required class="w-full p-4 bg-slate-800 rounded-xl border border-slate-700 focus:border-amber-500 outline-none">
+                <textarea id="message" placeholder="Votre engagement..." required class="w-full p-4 bg-slate-800 rounded-xl border border-slate-700 h-32 focus:border-amber-500 outline-none"></textarea>
+                <button type="submit" class="w-full py-4 bg-amber-600 hover:bg-amber-500 rounded-xl font-bold uppercase tracking-widest transition">Envoyer au Cloud</button>
+            </form>
+            <div id="signatures-list" class="mt-16 space-y-4"></div>
+        </div>
+    </section>
 
     <script type="module" src="app.js"></script>
 </body>
